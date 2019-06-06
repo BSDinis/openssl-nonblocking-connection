@@ -356,6 +356,31 @@ void peer_show_certificate(FILE *stream, const peer_t * const peer)
 }
 
 
+// get id
+uint64_t peer_get_id(const peer_t * const peer)
+{
+  if (!peer) return 0;
+  EVP_PKEY * key = peer_get_pubkey(peer);
+
+  if (!key) return 0;
+
+  uint64_t uid = 0;
+  uint8_t * buffer = NULL;
+  int len = i2d_PublicKey(key, &buffer);
+
+  for (int i = 0; i < len / 8; i++) {
+    uint64_t block = 0;
+    for (int j = 0; j < 8; j++) {
+      block <<= 8;
+      block |= buffer[8 * i + j];
+    }
+    uid ^= block;
+  }
+
+  return uid;
+}
+
+
 /* =================================================== */
 
 /* =========================
