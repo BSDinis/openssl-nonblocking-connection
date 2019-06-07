@@ -1,5 +1,5 @@
 CC := gcc
-INCLUDES += -I../network_utils -I../peer -I../utils -I. -I..
+INCLUDES += -I../network_utils -I../utils -I. -I..
 CFLAGS   += -Wall -Werror -fdiagnostics-color=always $(INCLUDES)
 LDFLAGS  += -L $(INCLUDE) -Wall -Werror -Wextra -fdiagnostics-color=always
 LDLIBS   += -lcrypto -lssl
@@ -8,7 +8,6 @@ LDLIBS   += -lcrypto -lssl
 vpath # clear
 vpath %.h ..
 vpath %.h ../utils
-vpath %.h ../peer
 vpath %.h ../network_utils
 
 ifeq ($(strip $(OPTIM)), yes)
@@ -19,7 +18,7 @@ ifneq ($(strip $(DEBUG)), no)
   CFLAGS += -g
 endif
 
-SOURCES := $(wildcard *.c ../peer/*.c ../network_utils/*.c ../utils/*.c)
+SOURCES := $(wildcard *.c ../network_utils/*.c ../utils/*.c)
 OBJECTS := $(SOURCES:.c=.o)
 TARGET  := client
 
@@ -34,7 +33,6 @@ $(TARGET): $(OBJECTS)	## compile target
 .PHONY: clean
 clean: ## remove garbage
 	rm -f $(OBJECTS) $(TARGET) vgcore*
-	rm -f ../peer/*.o
 	rm -f ../utils/*.o
 	rm -f ../network_utils/*.o
 
