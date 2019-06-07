@@ -1,12 +1,15 @@
 CC := gcc
-INCLUDES += -I../common -I.
+INCLUDES += -I../network_utils -I../peer -I../utils -I. -I..
 CFLAGS   += -Wall -Werror -fdiagnostics-color=always $(INCLUDES)
 LDFLAGS  += -L $(INCLUDE) -Wall -Werror -Wextra -fdiagnostics-color=always
 LDLIBS   += -lcrypto -lssl
 
 # set vpath
 vpath # clear
-vpath %.h ../common
+vpath %.h ..
+vpath %.h ../utils
+vpath %.h ../peer
+vpath %.h ../network_utils
 
 ifeq ($(strip $(OPTIM)), yes)
   CFLAGS += -O2
@@ -16,7 +19,7 @@ ifneq ($(strip $(DEBUG)), no)
   CFLAGS += -g
 endif
 
-SOURCES := $(wildcard *.c wildcard ../common/*.c)
+SOURCES := $(wildcard *.c ../peer/*.c ../network_utils/*.c ../utils/*.c)
 OBJECTS := $(SOURCES:.c=.o)
 TARGET  := server
 
@@ -31,7 +34,9 @@ $(TARGET): $(OBJECTS)	## compile target
 .PHONY: clean
 clean: ## remove garbage
 	rm -f $(OBJECTS) $(TARGET) vgcore*
-	rm -f ../common/*.o
+	rm -f ../peer/*.o
+	rm -f ../utils/*.o
+	rm -f ../network_utils/*.o
 
 .PHONY: depend
 depend: $(SOURCES) ## do the dependencies
