@@ -1,10 +1,3 @@
-/*
-Copyright (c) 2017 Darren Smith
-
-ssl_examples is free software; you can redistribute it and/or modify
-it under the terms of the MIT license. See LICENSE for details.
-*/
-
 #include <errno.h>
 #include <fcntl.h>
 #include <netinet/in.h>
