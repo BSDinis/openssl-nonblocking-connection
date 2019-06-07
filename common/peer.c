@@ -377,6 +377,8 @@ uint64_t peer_get_id(const peer_t * const peer)
     uid ^= block;
   }
 
+  free(buffer);
+  EVP_PKEY_free(key);
   return uid;
 }
 
