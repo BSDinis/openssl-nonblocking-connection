@@ -1,10 +1,12 @@
 .PHONY: all
 all: ## make all the targets
+	make -C peer
 	make -C server_src
 	make -C client_src
 
 .PHONY: clean
 clean: ## clean all the targets
+	make -C peer clean
 	make -C server_src clean
 	make -C client_src clean
 	rm -f server client vgcore*
