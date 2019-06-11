@@ -247,14 +247,10 @@ int handle_new_connection()
     return -1;
   }
 
-  if (peer_do_nonblock_handshake(&client) != 0) {
-    LOG("failed to do handshake");
-    return -1;
-  }
-
   fprintf(stderr, "\nAccepted connection on %s\n", peer_get_addr(&client));
-  peer_show_certificate(stdout, &client);
-  fprintf(stdout, "Client id: %lu\n", peer_get_id(&client));
+
+  if (peer_do_handshake(&client) != 0)
+    LOG_KILL("failed to do handshake");
 
   return 0;
 }
