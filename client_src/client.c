@@ -65,13 +65,11 @@ int main(int argc, char **argv)
   if (peer_connect(&server, &addr) != 0)
     LOG_KILL("failed to connect to peer");
 
-  if (peer_do_nonblock_handshake(&server) == -1)
+  if (peer_do_handshake(&server) != 0)
     LOG_KILL("failed to do handshake");
 
 
   fprintf(stdout, "Connected to peer at %s\n", peer_get_addr(&server));
-  peer_show_certificate(stdout, &server);
-  fprintf(stdout, "Server id: %lu\n", peer_get_id(&server));
 
   fd_set read_fds;
   fd_set write_fds;
